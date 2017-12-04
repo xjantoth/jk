@@ -7,6 +7,11 @@ touch ./gunicorn.log
 touch ./gunicorn-access.log
 tail -n 0 -f ./gunicorn*.log &
 
+
+python /code/jk/manage.py migrate 
+python /code/jk/manage.py collectstatic --noinput
+python /code/jk/manage.py makemigrations accounts
+python /code/jk/manage.py migrate
 #export DJANGO_SETTINGS_MODULE=projectx.settings
 
 exec gunicorn jk.wsgi \
