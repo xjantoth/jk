@@ -1,7 +1,14 @@
-# jk
-First Docerized App
 
+# First Docerized App: jk
+# navigate to working directory
+```
+cd /tmp
+git clone this-project
+mkdir /opt/workspace 
+rsync -avhx /tmp/this-project/* /opt/workspace/ 
 cd /opt/workspace
+```
+
 
 # list all files present in: "/opt/workspace"
 ```
@@ -34,3 +41,9 @@ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
 dac1b8de7c76        django:jk           "/code/start_gunic..."   3 seconds ago       Up 2 seconds                            prototype
 ```
+
+# view logs 
+```
+docker logs  dac1b8de7c767646c7e422beecaf0df145ae160ed086e322ec4ad0f12718b229
+```
+
