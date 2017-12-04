@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+
+{% block content %}
+    
+        <h3 class="h3-responsive">Please choose template files!</h3>
+
+        <form method="POST" action="{% url 'accounts:collect_templates' %}">
+        {% csrf_token %}
+        <ul class="list-group">
+            {% for object in form2 %}
+            <li class="list-group-item">
+                <div class="checkbox">
+                <label>
+                <input type="checkbox" name="identifier_for_my_class" value="{{ object.doc_file.url }}" />{{ object.name }}
+                </label>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+{#        <table border="0">#}
+        {% bootstrap_form form1 size="small" %}
+{#        </table>#}
+
+
+
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+
+
+
+{% endblock %}

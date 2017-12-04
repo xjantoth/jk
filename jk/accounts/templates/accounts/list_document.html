@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+    {% if documents_data %}
+
+
+        <h5 class="h5-responsive">Your Uploaded Files</h5>
+            <ul class="list-group">
+                {% for document in documents_data %}
+                    <li class="list-group-item">
+                        <a href="{{ document.doc_file.url }}">{{ document.name }}
+{#                            <img src="{{ document.docfile.url }}" alt="{{ document.doc_file.name }}">#}
+                        </a>
+                        <a class="btn btn-fill btn-warning pull-right" href="{% url 'accounts:remove_document' pk=document.pk %}">
+                            <span class="glyphicon glyphicon-remove-circle">remove</span>
+                        </a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+    {% else %}
+        <h5 class="h5-responsive">Your Uploaded Files</h5>
+
+    {% endif %}
+
+    {% if processed_document_data %}
+        <h5 class="h5-responsive">Your Processed Files</h5>
+            <ul class="list-group">
+                {% for pdd in processed_document_data %}
+                    <li class="list-group-item">
+                        <a href="{{ pdd.path_to_processed_file }}">{{ pdd.display_name }}</a>
+
+                        {#    REMOVE BUTTON          #}
+                        <a class="btn btn-fill btn-warning pull-right" href="{% url 'accounts:remove_processed_file' pk=pdd.pk %}">
+                            <span class="glyphicon glyphicon-remove-circle">remove</span>
+                        </a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+    {% else %}
+        <h5 class="h5-responsive">Seems like you do not have any processed data yet!</h5>
+    {% endif %}
+
+    <!-- Upload form. Note enctype attribute! -->
+    <form   action="{% url 'accounts:list_document' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+{#        {{ form.non_field_errors }}#}
+{#        {{ form.doc_file.label_tag }}#}
+{#        {{ form.doc_file.errors }}#}
+{#        {{ form.doc_file }}#}
+
+            {% bootstrap_form form %}
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<h2 class="display-2">Calculate Nutrition Facts (per 100g)</h2>
+
+    
+    <table id="myTable" class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+            <td>Product</td>
+            <td>Weight [g]</td>
+            <td>Lipids [g]</td>
+            <td>Saturated [g]</td>
+            <td>Sacharides [g]</td>
+            <td>Sugar [g]</td>
+            <td>Protein [g]</td>
+            <td>Salt [g]</td>
+            <td>Description</td>
+        </tr>
+      </thead>
+
+        <tr>
+            <td><input type="text" class="specialInput" id="name" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="weight" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="lipids" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="saturated" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="sacharides" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="sugar" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="protein" /></td>
+            <td><input type="number" min=0 oninput="this.value = Math.abs(this.value)" class="specialInput" id="salt" /></td>
+            <td><input type="text" class="specialInput" id="desc" /></td>
+        </tr>
+
+</table>
+
+<input type="button" id="btnAdd" class="btn btn-primary" onClick="insertRow()" value="Add New Item">
+<input type="button" id="btnDel" class="btn btn-danger" onClick="myDeleteFunction()" value="Remove Item">
+<input type="button" id="btnSelectInputIds" class="btn btn-primary" onClick="processDataFromTable()" value="Process">
+
+<div class="secretClass" id="secretId" style="display:none">
+<h2 class="display-2">Recalculated Nutrition Facts - Real Product Weight</h2>
+ <table id="calculatedTable" class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+            <td>Product</td>
+            <td>Weight [g]</td>
+            <td>Lipids [g]</td>
+            <td>Saturated [g]</td>
+            <td>Sacharides [g]</td>
+            <td>Sugar [g]</td>
+            <td>Protein [g]</td>
+            <td>Salt [g]</td>
+            <td>Description</td>
+        </tr>
+      </thead>
+
+
+</table>
+</div>
+
+<div class="secretClass" id="desiredCalulcationsDIV" style="display:none">
+<h2 class="display-2">Nutrition And Energy Facts</h2>
+ <table id="desiredCalulcationsTable" class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+
+            <td>Weight</td>
+            <td>Lipids</td>
+            <td>Saturated</td>
+            <td>Sacharides</td>
+            <td>Sugar</td>
+            <td>Protein</td>
+            <td>Salt</td>
+            <td>kilojouls</td>
+            <td>kilocals</td>
+
+        </tr>
+      </thead>
+
+
+</table>
+</div>
+{% endblock %}
+

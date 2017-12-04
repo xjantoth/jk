@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>Are you sure that you want to delete {{ object }}?</p>
+        <input type="submit" class="btn btn-danger" value="Confirm">
+
+        <a class="btn btn-simple btn-large btn-default" href="{% url 'accounts:list_document' %}">
+            Cancel</a>
+
+    </form>
+
+{% endblock %}
