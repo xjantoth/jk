@@ -1,0 +1,70 @@
+---
+
+- name: "install pwgen package"
+  become: true
+  apt:
+    name: pwgen
+    update_cache: yes
+
+- name: "Create application user {{ appuser }}"
+  become: true
+  user:
+    name: '{{ appuser }}'
+
+
+- name: "Delete {{ working_location }} temp folder if exists"
+  become: true
+  file:
+    name: "{{ working_location }}temp"
+    state: absent
+
+- name: "Create necceassary folders"
+  become: true
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ appuser }}'
+    group: '{{ appuser }}'
+    mode: 0775
+  with_items:
+    - '{{ working_location }}'
+    - "{{ working_location }}temp"
+
+- name: "clone git project {{ git_repository }}"
+  become: true
+  command: bash -c  "cd {{ working_location }}temp && git clone {{ git_repository }}"
+
+
+- name: "Copy files and folders from cloned project to a proper location {{ working_location }}"
+  become: true
+  command: bash -c "rsync -avh {{ working_location }}temp/jk/* {{ working_location }}"
+
+
+
+- name: "Delete {{ working_location }} temp folder after you sucessfully cloned and rsynced files and folders to {{ working_location }} location "
+  become: true
+  file:
+    name: "{{ working_location }}temp"
+    state: absent
+
+
+
+# Delete every Docker containers
+# Must be run first because images 
+# are attached to containers
+# --------------------------------
+# 
+#   root@localhost$ docker rm -f $(docker ps -a -q)
+#
+#
+# Delete every Docker image
+# --------------------------------
+# 
+#   root@localhost$ docker rmi -f $(docker images -q)
+
+
+- name: "Buidl docker image for Django project you cloned"
+  become: true
+  command: bash -c "cd {{ working_location }}; VAR=$(pwgen 10 1); docker build -t django:$VAR ."
+ 
+

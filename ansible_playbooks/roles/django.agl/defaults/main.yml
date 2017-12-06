@@ -1,0 +1,5 @@
+---
+# defaults file for django.agl
+appuser: docker_runner
+git_repository: "https://github.com/xjantoth/jk.git"
+working_location: /opt/workspace/
